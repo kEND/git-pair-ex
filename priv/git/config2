@@ -1,0 +1,5 @@
+[git-pair "authors"]
+	aa = Arthur Ashe <aashe@example.com>
+	zz = Zander Zink <zzink@example.com>
+[git-pair]
+	pair = Arthur Ashe + Zander Zink <aashe@example.com>
