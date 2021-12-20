@@ -153,6 +153,7 @@ defmodule GitPairEx.CLI do
     SUBCOMMANDS:
         add abbr 'Person <emailaddress>'    Add an author, e.g. `git-pair add js 'John Smith <jsmith@example.com>'
         clear                               Clears the pair
+        commit <commit-flags/options>       Just like regular `git commit` (approx.)
         help                                Prints this message
         remove abbr                         Remove an author by abbreviation
         show-authors                        Show list of authors
