@@ -6,9 +6,18 @@ defmodule GitPairEx.CLI do
     # return :help if the -h switch is supplied
     # pass to process
     argv
+    |> split_on_leading_slashm()
     |> split_on_equal()
     |> parse_args()
     |> process()
+  end
+
+  def split_on_leading_slashm(argv) do
+    Enum.map(argv, fn x ->
+      {f, g} = String.split_at(x, 2)
+      unless f == "-m", do: [f <> g], else: [f, g]
+    end)
+    |> List.flatten()
   end
 
   def split_on_equal(argv), do: argv |> Enum.map(&String.split(&1, "=")) |> List.flatten()
