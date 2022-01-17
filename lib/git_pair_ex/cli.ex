@@ -6,9 +6,18 @@ defmodule GitPairEx.CLI do
     # return :help if the -h switch is supplied
     # pass to process
     argv
+    |> split_on_leading_slashm()
     |> split_on_equal()
     |> parse_args()
     |> process()
+  end
+
+  def split_on_leading_slashm(argv) do
+    Enum.map(argv, fn x ->
+      {f, g} = String.split_at(x, 2)
+      unless f == "-m", do: [f <> g], else: [f, g]
+    end)
+    |> List.flatten()
   end
 
   def split_on_equal(argv), do: argv |> Enum.map(&String.split(&1, "=")) |> List.flatten()
@@ -35,10 +44,10 @@ defmodule GitPairEx.CLI do
       )
 
     case set_config_location(parse) do
-      {[ {:help, true} | _rest], _, _} ->
+      {[{:help, true} | _rest], _, _} ->
         :help
 
-      {[ {:version, true} | _rest], _, _} ->
+      {[{:version, true} | _rest], _, _} ->
         :version
 
       {_, ["add", abbr, email], opts} ->
@@ -80,7 +89,7 @@ defmodule GitPairEx.CLI do
     opts = if flags[:local], do: ["--local"] ++ opts, else: opts
     opts = if flags[:file], do: ["--file", flags[:file]] ++ opts, else: opts
 
-    flags = Enum.reject(flags, fn {k,_v} -> k in [:file, :global, :local] end)
+    flags = Enum.reject(flags, fn {k, _v} -> k in [:file, :global, :local] end)
 
     {flags, args, opts}
   end
