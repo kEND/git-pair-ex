@@ -5,7 +5,7 @@ defmodule GitPairEx.MixProject do
     [
       app: :git_pair_ex,
       version: "VERSION" |> File.read!() |> String.trim(),
-      elixir: "~> 1.13",
+      elixir: "~> 1.13.3",
       escript: escript_config(),
       start_permanent: Mix.env() == :prod,
       deps: deps()
